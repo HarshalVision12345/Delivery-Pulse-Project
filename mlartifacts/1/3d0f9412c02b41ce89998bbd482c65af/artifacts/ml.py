@@ -123,9 +123,10 @@ preprocessor = ColumnTransformer(transformers=[
     ("col",col_pipeline,cat_cols)
 ])
 
-max_depth = 10
-criterion = 'absolute_error'
-splitter = 'random'
+max_depth = 15
+criterion = 'squared_error'
+splitter = 'best'
+max_leaf_nodes = 8
 random_state = 42
 
 
@@ -156,6 +157,7 @@ with mlflow.start_run():
     max_depth=max_depth,
     criterion=criterion,
     splitter=splitter,
+    max_leaf_nodes = max_leaf_nodes,
     random_state=random_state
     )
 
@@ -168,6 +170,7 @@ with mlflow.start_run():
     mlflow.log_param("Max_depth",max_depth)
     mlflow.log_param("Criterion",criterion)
     mlflow.log_param("Splitter",splitter)
+    mlflow.log_param("Max_leaf_nodes",max_leaf_nodes)
     mlflow.log_param("Random_State",random_state)
 
     mlflow.log_artifact(__file__)

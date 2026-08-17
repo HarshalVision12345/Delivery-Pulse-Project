@@ -123,7 +123,7 @@ preprocessor = ColumnTransformer(transformers=[
     ("col",col_pipeline,cat_cols)
 ])
 
-max_depth = 10
+max_depth = 15
 criterion = 'absolute_error'
 splitter = 'random'
 random_state = 42

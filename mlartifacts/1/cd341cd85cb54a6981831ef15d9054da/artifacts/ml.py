@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import seaborn as sns 
 import pandas as pd 
-#from ydata_profiling import ProfileReport
+from ydata_profiling import ProfileReport
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
@@ -134,18 +134,18 @@ mlflow.set_experiment("Decision Tree - EXP1")
 
 with mlflow.start_run():
     #  Log Full Interactive HTML Report (ydata-profiling) 
-    # profile = ProfileReport(
-    # df,
-    # title="Delivery Pulse - Exploratory Data Analysis",
-    # explorative=True
-    # )
+    profile = ProfileReport(
+    df,
+    title="Delivery Pulse - Exploratory Data Analysis",
+    explorative=True
+    )
 
-    # html_report_path ="Delivery_Pulse.html"
-    # profile.to_file(html_report_path)
+    html_report_path ="Delivery_Pulse.html"
+    profile.to_file(html_report_path)
 
-    # mlflow.log_artifact(html_report_path,artifact_path="EDA")
+    mlflow.log_artifact(html_report_path,artifact_path="EDA")
 
-    # print("EDA Succesfully to MLFlow")
+    print("EDA Succesfully to MLFlow")
 
   # Preprocess Training and Testing Data --------------------->
 

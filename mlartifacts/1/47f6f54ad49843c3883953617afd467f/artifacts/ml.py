@@ -123,8 +123,8 @@ preprocessor = ColumnTransformer(transformers=[
     ("col",col_pipeline,cat_cols)
 ])
 
-max_depth = 10
-criterion = 'absolute_error'
+max_depth = 3
+criterion = 'poisson'
 splitter = 'random'
 random_state = 42
 
