@@ -93,20 +93,6 @@ cat_cols = [
     "Weather_conditions", "Road_traffic_density", "City"
 ]
 
-num_pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="mean")),
-    ("Scaler", StandardScaler())
-])
-
-col_pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent")),
-    ("OHE", OneHotEncoder(sparse_output=False, handle_unknown="ignore"))
-])
-
-preprocessor = ColumnTransformer(transformers=[
-    ("num", num_pipeline, num_cols),
-    ("col", col_pipeline, cat_cols)
-])
 
 num_pipeline = Pipeline([
     ("imputer",SimpleImputer(strategy="mean")),
@@ -149,19 +135,18 @@ with mlflow.start_run():
 
   # Preprocess Training and Testing Data --------------------->
 
-    X_train_preprocess = preprocessor.fit_transform(X_train)
-    X_test_preprocess = preprocessor.transform(X_test)
+    full_model = Pipeline([
+        ("Preprocessor",preprocessor),
+        ("model",RandomForestRegressor(
+            n_estimators=n_estimator,
+            max_depth=max_depth,
+            criterion=criterion,
+            random_state=random_state
+        ))
+    ])
 
-    model = RandomForestRegressor(
-    n_estimators=n_estimator,
-    max_depth=max_depth,
-    criterion=criterion,
-    random_state=random_state
-    )
-
-    model.fit(X_train_preprocess,y_train)
-
-    y_pred = model.predict(X_test_preprocess)
+    full_model.fit(X_train,y_train)
+    y_pred = full_model.predict(X_test)
 
     score = r2_score(y_test,y_pred)
 
@@ -171,7 +156,7 @@ with mlflow.start_run():
     mlflow.log_param("Random_State",random_state)
 
     mlflow.log_artifact(__file__)
-    mlflow.sklearn.log_model(model,artifact_path="Decision_Tree_Regressor")
+    mlflow.sklearn.log_model(full_model,artifact_path="Random_Forest_Regressor",skops_trusted_types=["numpy.dtype"])
     mlflow.log_metric("R2_Score",score)
 
     print(f"Score = {score}")
