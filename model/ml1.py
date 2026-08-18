@@ -13,6 +13,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
+import joblib
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
@@ -159,5 +160,8 @@ with mlflow.start_run():
     mlflow.sklearn.log_model(full_model,artifact_path="Random_Forest_Regressor",skops_trusted_types=["numpy.dtype"])
     mlflow.log_metric("R2_Score",score)
 
+    # Save the model.pkl here ------------------>
+    joblib.dump(full_model,"model.pkl")
+
     print(f"Score = {score}")
-    print("Succesfully Completed The Preprocessing and model making and both loged in")
+    print("Successfully saved model.pkl and preprocessor.pkl!")
