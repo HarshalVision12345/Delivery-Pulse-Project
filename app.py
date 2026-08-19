@@ -6,7 +6,7 @@ from PIL import Image
 
 st.title("Delivery Pulse Project")
 
-Delivery_Img = Image.open(r"C:\Users\HARSHAL\OneDrive\Desktop\Delivery Pulse\Delivery.png")
+Delivery_Img = Image.open("Delivery.png")
 st.image(Delivery_Img)
 
 with st.expander("🛵 🚴‍♂️  About Delivery Pulse Dataset  🚴‍♂️ 🛵"):
