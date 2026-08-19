@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Start FastAPI backend in the background
-uvicorn delivery_api:app --host 0.0.0.0 --port 8000 &
+# Start FastAPI backend internally on port 8000
+uvicorn delivery_api:app --host 127.0.0.1 --port 8000 &
 
-# Start Streamlit frontend in the foreground
-streamlit run app.py --server.$port=8501 --server.address=0.0.0.0
+# Start Streamlit on the external platform $PORT
+streamlit run app.py --server.port=$PORT --server.address=0.0.0.0
